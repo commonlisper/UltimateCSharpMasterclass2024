@@ -1,22 +1,27 @@
 ﻿PrintWelcomeMessage();
 
-int firstNumber = int.Parse(GetUserInputFromConsole("Input the first number: "));
-int secondNumber = int.Parse(GetUserInputFromConsole("Input the second number: "));
+int firstNumber = int.Parse(GetUserInput("Input the first number: "));
+int secondNumber = int.Parse(GetUserInput("Input the second number: "));
 
 PrintMenu();
-string option = GetUserInputFromConsole("=> ");
 
-if (option.Equals("a", StringComparison.CurrentCultureIgnoreCase))
+string choice = GetUserInput("=> ");
+long result = 0;
+
+if (IsChoiceEqualToOption(choice, "a"))
 {
-    Console.WriteLine(Add(firstNumber, secondNumber));
+    result = Add(firstNumber, secondNumber);
+    Console.WriteLine(result);
 }
-else if (option.ToLower() == "s")
+else if (IsChoiceEqualToOption(choice, "s"))
 {
-    Console.WriteLine(Subtract(firstNumber, secondNumber));
+    result = Subtract(firstNumber, secondNumber);
+    Console.WriteLine(result);
 }
-else if (option.ToLower() == "m")
+else if (IsChoiceEqualToOption(choice, "m"))
 {
-    Console.WriteLine(Multiply(firstNumber, secondNumber));
+    result = Multiply(firstNumber, secondNumber);
+    Console.WriteLine(result);
 }
 else
 {
@@ -24,7 +29,7 @@ else
 }
 
 Console.WriteLine("Press any key to close.");
-Console.ReadLine();
+Console.ReadKey();
 
 long Multiply(int firstNumber, int secondNumber)
 {
@@ -47,17 +52,19 @@ void PrintMenu()
     Console.WriteLine("[A]dd");
     Console.WriteLine("[S]ubtract");
     Console.WriteLine("[M]ultiply");
-
 }
 
-string GetUserInputFromConsole(string inputMessage)
+string GetUserInput(string inputMessage)
 {
     Console.Write(inputMessage);
     string? userInput = Console.ReadLine();
-    return userInput;
+    return userInput ?? string.Empty;
 }
 
 void PrintWelcomeMessage()
 {
     Console.WriteLine("Hello!");
 }
+
+bool IsChoiceEqualToOption(string choice, string option) =>
+    choice.Equals(option, StringComparison.CurrentCultureIgnoreCase);
